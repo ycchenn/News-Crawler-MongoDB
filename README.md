@@ -25,12 +25,18 @@
 ```bash
 git clone [https://github.com/ycchenn/News-Crawler-MongoDB.git](https://github.com/ycchenn/News-Crawler-MongoDB.git)
 cd News-Crawler-MongoDB
+```
 
 ### 2. 安裝必要套件
+```bash
 pip install -r requirements.txt
+```
 
 ### 3. 設定環境變數
+```bash
 MONGO_URI=mongodb+srv://<USER>:<PASSWORD>@your-cluster.mongodb.net/
+```
 
 ### 4. 執行程式
+```bash
 python main.py
