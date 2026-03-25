@@ -1,3 +1,4 @@
+![Crawler Status](https://github.com/ycchenn/News-Crawler-MongoDB/actions/workflows/main.yml/badge.svg)
 # 熱門新聞爬蟲與 MongoDB 整合系統 
 ### Taiwan News Crawler with MongoDB Integration
 
