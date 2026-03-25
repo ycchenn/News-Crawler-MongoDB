@@ -36,3 +36,23 @@ def get_all_news():
             "source": "中時新聞網"
         })
     return news_list
+
+def save_and_verify(news_data):
+    client = MongoClient(os.getenv('MONGO_URI'), tlsCAFile=certifi.where())
+    db = client['Project0']
+    col = db['NewsCrawler']
+    
+    col.delete_many({})
+    col.insert_many(news_data)
+    print(f"成功存入 {len(news_data)} 筆新聞")
+    
+    print("\n--- 資料庫讀回驗證 ---")
+    for doc in col.find().limit(3):
+        print(f"[{doc['source']}] {doc['title']}")
+    
+    stats = list(col.aggregate([{"$group": {"_id": "$source", "count": {"$sum": 1}}}]))
+    print("\n報社分布統計：", stats)
+
+if __name__ == "__main__":
+    data = get_all_news()
+    save_and_verify(data)
