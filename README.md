@@ -13,11 +13,25 @@
 - **安全性設計**：用 `.env` 環境變數管理資料庫密碼等資訊，避免 API 金鑰與資料庫密碼外洩。
 - **SSL 安全連線**：用 `certifi` 套件讓不同作業系統都可以建立加密連線。
 
+## CI/CD
+整合 **GitHub Actions** 無人值守自動化爬蟲，流程：
+- **定時執行**：設定於每天台北時間 08:00 (UTC 00:00) 自動啟動。
+- **雲端同步**：執行成功後將自動更新 MongoDB Atlas 雲端資料庫之內容。
+- **狀態監控**：可至 [Actions](../../actions) 頁籤查看每日執行狀態與 Log。
+
 ## Tech Stack
 - **語言**: Python 3.x
 - **爬蟲**: Requests, BeautifulSoup4
 - **資料庫**: MongoDB Atlas (NoSQL)
 - **環境管理**: python-dotenv, certifi
+
+## Project Structure
+.
+├── .github/workflows/
+│   └── main.yml         # GitHub Actions 自動化腳本
+├── main.py              # 爬蟲主程式 (含 MongoDB 聚合統計)
+├── requirements.txt     # 環境依賴清單
+└── .env.example         # 環境變數範本
 
 ## Getting Started
 
