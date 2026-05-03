@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from pymongo import MongoClient
 from datetime import datetime
 from dotenv import load_dotenv
+from snownlp import SnowNLP
 
 load_dotenv()
 
@@ -48,11 +49,27 @@ def save_and_verify(news_data):
     
     print("\n--- 資料庫讀回驗證 ---")
     for doc in col.find().limit(3):
-        print(f"[{doc['source']}] {doc['title']}")
+        sentiment_label = "正向" if doc['polarity'] == 1 else "負向" if doc['polarity'] == -1 else "中立"
+        print(f"[{doc['source']}] ({sentiment_label}) {doc['title']}")
     
-    stats = list(col.aggregate([{"$group": {"_id": "$source", "count": {"$sum": 1}}}]))
-    print("\n報社分布統計：", stats)
+    stats = list(col.aggregate([{"$group": {"_id": "$polarity", "count": {"$sum": 1}}}]))
+    print("\n情緒分布統計 (-1負, 0中, 1正)：", stats)
 
 if __name__ == "__main__":
     data = get_all_news()
+
+    for news in data:
+        s = SnowNLP(news['title'])
+        score = s.sentiments
+        
+        if score < 1/3:
+            polarity = -1
+        elif score < 2/3:
+            polarity = 0
+        else:
+            polarity = 1
+        
+        news['sentiment_score'] = score
+        news['polarity'] = polarity
+
     save_and_verify(data)
