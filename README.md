@@ -1,11 +1,11 @@
 ![Crawler Status](https://github.com/ycchenn/News-Crawler-MongoDB/actions/workflows/main.yml/badge.svg)
-# 熱門新聞爬蟲與 MongoDB 整合系統 
-### Taiwan News Crawler with MongoDB Integration
+# 熱門新聞爬蟲與 MongoDB 新聞輿情監測整合系統 
+### Taiwan News Sentiment Crawler with MongoDB Integration
 
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
 [![MongoDB](https://img.shields.io/badge/Database-MongoDB%20Atlas-green)](https://www.mongodb.com/cloud/atlas)
 
-這是一個自動化新聞擷取與儲存系統，專責抓取台灣主要媒體（聯合報、中時新聞網）的即時熱門新聞，並將非結構化資料轉化為 JSON 格式後，存入 MongoDB Atlas 雲端資料庫。
+這是一個自動化新聞擷取、儲存與輿情監測系統，專責抓取台灣主要媒體的即時熱門新聞，並將非結構化資料轉化為 JSON 格式後，存入 MongoDB Atlas 雲端資料庫。作為原形輿情監控系統，幫助決策者快速掌握每日新聞風向。
 
 ## Core Features
 - **多來源爬蟲**：整合 Requests 與 BeautifulSoup4，同步擷取 UDN 與 Chinatimes 資料。
@@ -13,6 +13,7 @@
 - **進階資料分析**：用 MongoDB Aggregation Pipeline 即時統計資料庫端報表。
 - **安全性設計**：用 `.env` 環境變數管理資料庫密碼等資訊，避免 API 金鑰與資料庫密碼外洩。
 - **SSL 安全連線**：用 `certifi` 套件讓不同作業系統都可以建立加密連線。
+- **AI 情緒分析**：用 **SnowNLP** 語意模型，自動判定新聞標題之正負面情感。
 
 ## CI/CD
 整合 **GitHub Actions** 無人值守自動化爬蟲，流程：
@@ -22,7 +23,7 @@
 
 ## Tech Stack
 - **語言**: Python 3.x
-- **爬蟲**: Requests, BeautifulSoup4
+- **爬蟲**: Requests, BeautifulSoup4, SnowNLP
 - **資料庫**: MongoDB Atlas (NoSQL)
 - **環境管理**: python-dotenv, certifi
 
